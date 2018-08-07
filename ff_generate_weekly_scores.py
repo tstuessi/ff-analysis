@@ -1,6 +1,6 @@
 # turn the weekly scores from 2014 - 2017 into csvs per player
 import nflgame as nfl
-from ff_score import FleaFlickerRuleset
+from ff_fleaflicker_ruleset import FleaFlickerRuleset
 from collections import defaultdict
 
 import pandas as pd
