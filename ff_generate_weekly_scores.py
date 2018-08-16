@@ -17,7 +17,7 @@ def generate_fleaflicker_scores(year=2017):
         players = nfl.combine(games)
         player_scores = dict()
         for player in players:
-            player_scores["{}_{}".format(player.playerid, player.name)] = f.eval_player(player)
+            player_scores["{}".format(player.playerid, player.name)] = f.eval_player(player)
         score_df["WEEK_{}".format(i)] = pd.Series(player_scores)
 
     score_df.fillna(0, inplace=True)

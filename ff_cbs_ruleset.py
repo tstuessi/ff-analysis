@@ -246,11 +246,11 @@ class CBSRuleset(Ruleset):
                 for player in play.players:
                     if player.player is not None:
                         scored = self.eval_player(player)
-                        master_player_scores_dict["{}_{}".format(player.player.playerid, player.player.name)] += scored
+                        master_player_scores_dict["{}".format(player.player.playerid, player.player.name)] += scored
         
         for player_stats in combined_games:
             scored = self.eval_player(player_stats, alt_rule_list=self.non_play_rules)
-            master_player_scores_dict["{}_{}".format(player_stats.player.playerid, player_stats.player.name)] += scored
+            master_player_scores_dict["{}".format(player_stats.player.playerid, player_stats.player.name)] += scored
         return master_player_scores_dict
 
     def eval_week(self, week):
