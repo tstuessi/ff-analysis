@@ -21,8 +21,6 @@ def generate_fleaflicker_scores(year=2017):
         score_df["WEEK_{}".format(i)] = pd.Series(player_scores)
 
     score_df.fillna(0, inplace=True)
-    score_df["SUM"] = score_df.sum(axis=1)
-    score_df.sort_values("SUM", ascending=False, inplace=True)
     score_df.to_csv("FLEAFLICKER_YEAR_{}.csv".format(year))
 
 
@@ -39,8 +37,6 @@ def generate_cbs_scores(year=2017):
         score_df["WEEK_{}".format(i)] = pd.Series(week_dict)
 
     score_df.fillna(0, inplace=True)
-    score_df["SUM"] = score_df.sum(axis=1)
-    score_df.sort_values("SUM", ascending=False, inplace=True)
     score_df.to_csv("CBS_YEAR_{}.csv".format(year))
         
 for y in range(2014, 2018, 1):
