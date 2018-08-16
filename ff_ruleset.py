@@ -10,6 +10,7 @@ class Rule:
     
     # nflgame player object
     def eval_player(self, player_stats):
+        scored = 0
         if player_stats.player is None:
             return 0
         if player_stats.player.position in self.affected_positions:
@@ -20,6 +21,9 @@ class Rule:
                     scored = player_stats.__dict__[self.parameter] * self.points
                 else:
                     scored = 0
+
+            if scored is None:
+                scored = 0
 
             if self.debug:
                 print("Evalauted rule{} for {} points".format(" " + self.rule_name, scored))
@@ -37,17 +41,27 @@ class Ruleset:
         self.d_sp_players = ['CB', 'DB', 'DE', 'DT', 'FS', 'ILB', 'LB', 'MLB', 'NT', 'OLB', 'SS', 'SAF']
         self.all_players = self.offensive_players + self.d_sp_players
 
-    def add_rule(self, affected_positions, points, parameter, rule_name=None, alt_eval_function=None):
-        self.rule_list.append(
-            Rule(affected_positions, points, parameter, debug=self.debug, 
-                 rule_name=rule_name, alt_eval_function=alt_eval_function)
-        )
+    def add_rule(self, affected_positions, points, parameter, rule_name=None, alt_eval_function=None, alt_rule_list=None):
+        if alt_rule_list is None:
+            self.rule_list.append(
+                Rule(affected_positions, points, parameter, debug=self.debug, 
+                    rule_name=rule_name, alt_eval_function=alt_eval_function)
+            )
+        else:
+            alt_rule_list.append(
+                Rule(affected_positions, points, parameter, debug=self.debug, 
+                    rule_name=rule_name, alt_eval_function=alt_eval_function)
+            )
 
-    def eval_player(self, player_stats):
+    def eval_player(self, player_stats, alt_rule_list=None):
         score = 0
+        if alt_rule_list is None:
+            tmp_rule_list = self.rule_list
+        else:
+            tmp_rule_list = alt_rule_list
         if self.debug:
             print(player_stats)
-        for rule in self.rule_list:
+        for rule in tmp_rule_list:
             score += rule.eval_player(player_stats)
 
         return score
