@@ -1,0 +1,67 @@
+-- Let's take a look at creating some targets
+SELECT
+    p.playerid
+    ,p.name
+    ,cbs.total
+    ,SUM(defense_ast) as 'defense_ast'
+    ,SUM(defense_ffum) as 'defense_ffum'
+    ,SUM(defense_int) as 'defense_int'
+    ,SUM(defense_sk) as 'defense_sk'
+    ,SUM(defense_tkl) as 'defense_tkl'
+    ,SUM(fumbles_lost) as 'fumbles_lost'
+    ,SUM(fumbles_rcv) as 'fumbles_rcv'
+    ,SUM(fumbles_tot) as 'fumbles_tot'
+    ,SUM(fumbles_trcv) as 'fumbles_trcv'
+    ,SUM(fumbles_yds) as 'fumbles_yds'
+    ,SUM(kicking_fga) as 'kicking_fga'
+    ,SUM(kicking_fgm) as 'kicking_fgm'
+    ,SUM(kicking_fgyds) as 'kicking_fgyds'
+    ,SUM(kicking_totpfg) as 'kicking_totpfg'
+    ,SUM(kicking_xpa) as 'kicking_xpa'
+    ,SUM(kicking_xpb) as 'kicking_xpb'
+    ,SUM(kicking_xpmade) as 'kicking_xpmade'
+    ,SUM(kicking_xpmissed) as 'kicking_xpmissed'
+    ,SUM(kicking_xptot) as 'kicking_xptot'
+    ,SUM(kickret_avg) as 'kickret_avg'
+    ,SUM(kickret_lng) as 'kickret_lng'
+    ,SUM(kickret_lngtd) as 'kickret_lngtd'
+    ,SUM(kickret_ret) as 'kickret_ret'
+    ,SUM(kickret_tds) as 'kickret_tds'
+    ,SUM(passing_att) as 'passing_att'
+    ,SUM(passing_cmp) as 'passing_cmp'
+    ,SUM(passing_ints) as 'passing_ints'
+    ,SUM(passing_tds) as 'passing_tds'
+    ,SUM(passing_twopta) as 'passing_twopta'
+    ,SUM(passing_twoptm) as 'passing_twoptm'
+    ,SUM(passing_yds) as 'passing_yds'
+    ,SUM(punting_avg) as 'punting_avg'
+    ,SUM(punting_i20) as 'punting_i20'
+    ,SUM(punting_lng) as 'punting_lng'
+    ,SUM(punting_pts) as 'punting_pts'
+    ,SUM(punting_yds) as 'punting_yds'
+    ,SUM(puntret_avg) as 'puntret_avg'
+    ,SUM(puntret_lng) as 'puntret_lng'
+    ,SUM(puntret_lngtd) as 'puntret_lngtd'
+    ,SUM(puntret_ret) as 'puntret_ret'
+    ,SUM(puntret_tds) as 'puntret_tds'
+    ,SUM(receiving_lng) as 'receiving_lng'
+    ,SUM(receiving_lngtd) as 'receiving_lngtd'
+    ,SUM(receiving_rec) as 'receiving_rec'
+    ,SUM(receiving_tds) as 'receiving_tds'
+    ,SUM(receiving_twopta) as 'receiving_twopta'
+    ,SUM(receiving_twoptm) as 'receiving_twoptm'
+    ,SUM(receiving_yds) as 'receiving_yds'
+    ,SUM(rushing_att) as 'rushing_att'
+    ,SUM(rushing_lng) as 'rushing_lng'
+    ,SUM(rushing_lngtd) as 'rushing_lngtd'
+    ,SUM(rushing_tds) as 'rushing_tds'
+    ,SUM(rushing_twopta) as 'rushing_twopta'
+    ,SUM(rushing_twoptm) as 'rushing_twoptm'
+    ,SUM(rushing_yds) as 'rushing_yds'
+FROM   
+    PLAYER_WEEKLY_STATS_YEAR_2016 as p
+INNER JOIN CBS_YEAR_2017 as cbs
+ON 
+    cbs.playerid = p.playerid
+GROUP BY 
+    p.playerid, p.name, cbs.total;
