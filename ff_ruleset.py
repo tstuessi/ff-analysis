@@ -32,6 +32,12 @@ class Rule:
             return 0
 
 class Ruleset:
+    @staticmethod
+    def offensive_players():
+        return ['QB', 'RB', 'FB', 'WR', 'TE', 'K']
+    @staticmethod
+    def defensive_players():
+        return ['CB', 'DB', 'DE', 'DT', 'FS', 'ILB', 'LB', 'MLB', 'NT', 'OLB', 'SS', 'SAF']
     def __init__(self, debug=False):
         self.debug = debug
 
