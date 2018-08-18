@@ -2,7 +2,37 @@
 SELECT
     p.playerid
     ,p.name
-    ,cbs.total
+    ,p.position
+    ,cbs.WEEK_15 as 'target'
+    ,p.team
+    ,team_stats.QB
+    ,team_stats.RB
+    ,team_stats.WR
+    ,team_stats.TE
+    ,team_stats.K
+    ,CASE WHEN SUM(rushing_att) != 0
+        THEN 
+            SUM(rushing_yds) / SUM(rushing_att)
+        ELSE 0 
+        END as 'ypc'
+    ,CASE WHEN SUM(passing_att) != 0
+        THEN
+            SUM(passing_cmp) / SUM(passing_att)
+        ELSE 0
+        END as 'pass_cmp_ratio'
+    ,CASE WHEN SUM(receiving_rec) != 0
+        THEN 
+            SUM(receiving_yds) / SUM(receiving_rec)
+        ELSE 0
+        END as 'ypr'
+    ,CASE WHEN SUM(passing_att) != 0
+        THEN
+            (((((SUM(passing_cmp) / SUM(passing_att)) - .3) * 5) +
+            (((SUM(passing_yds) / SUM(passing_att)) -  3) * .25) +
+            (((SUM(passing_tds) / SUM(passing_att))) * 20) +
+            (2.375 - ((SUM(passing_ints) / SUM(passing_att)) * 25))) / 6) * 100
+        ELSE 0
+        END as 'passer_rating'
     ,SUM(defense_ast) as 'defense_ast'
     ,SUM(defense_ffum) as 'defense_ffum'
     ,SUM(defense_int) as 'defense_int'
@@ -59,9 +89,12 @@ SELECT
     ,SUM(rushing_twoptm) as 'rushing_twoptm'
     ,SUM(rushing_yds) as 'rushing_yds'
 FROM   
-    PLAYER_WEEKLY_STATS_YEAR_2016 as p
-INNER JOIN CBS_YEAR_2017 as cbs
+    PLAYER_WEEKLY_STATS_YEAR_2015 as p
+INNER JOIN CBS_YEAR_2016 as cbs
 ON 
     cbs.playerid = p.playerid
+INNER JOIN TEAM_POSITION_STATS_2015 as team_stats 
+ON
+    p.team = team_stats.team 
 GROUP BY 
     p.playerid, p.name, cbs.total;
